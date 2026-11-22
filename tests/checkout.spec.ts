@@ -52,4 +52,78 @@ test('Complete checkout successfully', async ({ page }) => {
     await expect(checkoutPage.confirmationMessage).toBeVisible();
 });
 
+    test('Verify checkout validation when first name is missing', async ({ page }) => {
+
+    
+    await page.getByRole('button', { name: 'Add to cart' }).first().click();
+
+    
+    await cartPage.openCart();
+
+    
+    await cartPage.proceedToCheckout();
+
+    
+    await checkoutPage.lastNameInput.fill('User');
+    await checkoutPage.postalCodeInput.fill('4001');
+
+   
+    await checkoutPage.continueButton.click();
+
+    
+    await checkoutPage.verifyErrorMessage();
+
+    await expect(checkoutPage.errorMessage).toContainText(
+        'Error: First Name is required'
+    );
+});
+
+    test('Verify checkout validation when last name is missing', async ({ page }) => {
+
+    
+    await page.getByRole('button', { name: 'Add to cart' }).first().click();
+
+    
+    await cartPage.openCart();
+
+    
+    await cartPage.proceedToCheckout();
+
+    
+    await checkoutPage.firstNameInput.fill('Test');
+    await checkoutPage.postalCodeInput.fill('4001');
+
+    
+    await checkoutPage.continueButton.click();
+
+    await checkoutPage.verifyErrorMessage();
+
+    await expect(checkoutPage.errorMessage).toContainText(
+        'Error: Last Name is required'
+    );
+});
+
+    test('Verify checkout validation when postal code is missing', async ({ page }) => {
+
+    await page.getByRole('button', { name: 'Add to cart' }).first().click();
+
+    
+    await cartPage.openCart();
+
+    await cartPage.proceedToCheckout();
+
+    await checkoutPage.firstNameInput.fill('Test');
+    await checkoutPage.lastNameInput.fill('User');
+
+    
+    await checkoutPage.continueButton.click();
+
+    
+    await checkoutPage.verifyErrorMessage();
+
+    await expect(checkoutPage.errorMessage).toContainText(
+        'Error: Postal Code is required'
+    );
+});
+
 

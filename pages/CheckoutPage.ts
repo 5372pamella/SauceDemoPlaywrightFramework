@@ -10,6 +10,7 @@ export class CheckoutPage {
     readonly finishButton: Locator;
     readonly checkoutTitle: Locator;
     readonly confirmationMessage: Locator;
+    readonly errorMessage: Locator;
 
     constructor(page: Page) {
 
@@ -28,6 +29,7 @@ export class CheckoutPage {
         this.checkoutTitle = page.getByText('Checkout: Your Information', { exact: true });
 
         this.confirmationMessage = page.getByText('Thank you for your order!', { exact: true });
+        this.errorMessage = page.locator('[data-test="error"]');
 
     }
 
@@ -53,6 +55,10 @@ export class CheckoutPage {
 
         await this.confirmationMessage.waitFor({ state: 'visible' });
 
+    }
+
+    async verifyErrorMessage() {
+    await this.errorMessage.waitFor({ state: 'visible' });
     }
 }
 
