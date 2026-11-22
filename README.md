@@ -1,5 +1,6 @@
-
 # SauceDemo Playwright Automation Framework
+
+![Playwright Tests](https://github.com/5372pamella/SauceDemoPlaywrightFramework/actions/workflows/playwright.yml/badge.svg)
 
 ## Project Overview
 
