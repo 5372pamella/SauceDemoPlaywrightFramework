@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { loginData } from '../test-data/loginData';
 
 let loginPage: LoginPage;
 
@@ -10,7 +11,10 @@ test.beforeEach(async ({ page }) => {
 
 test('Successful login', async ({ page }) => {
 
-    await loginPage.login('standard_user', 'secret_sauce');
+    await loginPage.login(
+        loginData.validUser.username,
+        loginData.validUser.password
+    );
 
     await expect(page.getByText('Products')).toBeVisible();
 
@@ -18,7 +22,10 @@ test('Successful login', async ({ page }) => {
 
 test('Invalid login', async ({ page }) => {
 
-    await loginPage.login('wrong_user', 'wrong_password');
+    await loginPage.login(
+        loginData.invalidUser.username,
+        loginData.invalidUser.password
+    );
 
     await expect(
         page.getByText('Epic sadface: Username and password do not match any user in this service')
@@ -28,7 +35,10 @@ test('Invalid login', async ({ page }) => {
 
 test('Locked out user login', async ({ page }) => {
 
-    await loginPage.login('locked_out_user', 'secret_sauce');
+    await loginPage.login(
+        loginData.lockedOutUser.username,
+        loginData.lockedOutUser.password
+    );
 
     await expect(
         page.getByText('Epic sadface: Sorry, this user has been locked out.')
