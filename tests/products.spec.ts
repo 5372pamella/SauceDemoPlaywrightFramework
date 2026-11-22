@@ -31,4 +31,38 @@ test('Verify products page and product count', async () => {
 });
 
 
+test('Sort products by price from low to high', async ({ page }) => {
+
+    await productsPage.sortProductsBy('Price (low to high)');
+
+    const prices = await page.locator('.inventory_item_price').allTextContents();
+
+    const numericPrices = prices.map(price =>
+        Number(price.replace('$', ''))
+    );
+
+    const sortedPrices = [...numericPrices].sort((a, b) => a - b);
+
+    expect(numericPrices).toEqual(sortedPrices);
+
+});
+
+
+    test('Verify user can open product details', async ({ page }) => {
+
+    await productsPage.openProduct('Sauce Labs Backpack');
+
+    await expect(
+        page.getByText('Sauce Labs Backpack', { exact: true })
+    ).toBeVisible();
+
+    await expect(
+    page.locator('div.inventory_details')
+    ).toBeVisible();
+
+});
+
+
+
+
 

@@ -36,6 +36,12 @@ export class ProductsPage {
     async openShoppingCart() {
         await this.shoppingCart.click();
     }
+
+
+    async openProduct(productName: string) {
+    await this.page.getByText(productName, { exact: true }).click();
+}
+
 }
 
 
