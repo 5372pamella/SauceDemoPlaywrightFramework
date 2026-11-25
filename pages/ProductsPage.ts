@@ -39,7 +39,9 @@ export class ProductsPage {
 
 
     async openProduct(productName: string) {
-    await this.page.getByText(productName, { exact: true }).click();
+    await this.page.getByRole('button', {
+        name: `View details for ${productName}`
+    }).last().click();
 }
 
 }
